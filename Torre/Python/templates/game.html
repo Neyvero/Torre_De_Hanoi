@@ -54,6 +54,28 @@
           });
       }
 
+      function formatarTempo(tempo) {
+       let horas = Math.floor(tempo / 3600000);
+       let minutos = Math.floor((tempo % 3600000) / 60000);
+       let segundos = Math.floor((tempo % 60000) / 1000);
+       return (
+               (horas < 10 ? "0" : "") + horas + ":" +
+               (minutos < 10 ? "0" : "") + minutos + ":" +
+               (segundos < 10 ? "0" : "") + segundos
+               );
+     }
+      function iniciarCronometro() {
+        cronometro = setInterval(function() {
+        tempoTotal += 1000; 
+        document.getElementById("tempo").innerText = formatarTempo(tempoTotal); 
+         }, 1000); 
+    }
+     function pararCronometro() {
+                clearInterval(cronometro); 
+            }
+
+      let contador = 0;
+
       function move(fromtower, totower){
           if(!towers[fromtower].length) return;
           let disk = towers[fromtower].pop();
@@ -65,7 +87,12 @@
           let d=document.querySelector('.d'+disk);
           d.classList.add('p0');
           towers[totower].push(disk);
+          setTimeout(function() {
+                    iniciarCronometro(); 
+                }, 1000);
           setTimeout(render,1000);
+          setTimeout(endgame,2000);
+          contador++;
       }
 
       function clicktower(n){
@@ -80,6 +107,15 @@
           }
           console.log(movements);
       }
+
+      function endgame(){
+        if(towers[2].length === 5){
+          nome = prompt("Parabéns! Você completou o jogo!\nDigite seu nome: ");
+          movimentos = contador;
+          pararCronometro();
+          alert(cronometro);
+      }
+    }
 
       setInterval(() => {
           if(movements.length && movements[movements.length-1].length == 2){
