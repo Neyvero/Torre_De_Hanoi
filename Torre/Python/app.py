@@ -17,6 +17,11 @@ def torre_hanoi(numero, inicio, auxiliar, fim):
 def home():
     return render_template('home.html')
 
+#Rota da pagina integrantes
+@app.route('/integrantes')
+def integrantes():
+    return render_template('img.html')
+
 #Rota da pagina do jogo
 @app.route('/game', methods=['GET', 'POST'])
 def game():
@@ -35,4 +40,3 @@ def table():
 #Inicia o servidor! Debug fica ativo para atualizar o site assim que mudar algo do codigo 
 if __name__ == '__main__':
     app.run(debug=True)#-> Debug
-

@@ -36,6 +36,17 @@
     <input type="number" id="numero" name="numero" min="1" required />    
     <button type="submit">Iniciar Simulação</button></p>
 
+    <form>
+
+      <input name='CriaCampoNome' placeholder='Digite o nome de usuário' />
+      <input name='CriaCampoTempo' placeholder='Número de movimentos' />
+      <button type="submit">Enviar</button>
+  
+  </form>
+  
+  <ul class="listaDaTabela">
+  </ul>
+
     <script>
       let towers = [[5,4,3,2,1],[],[]];
       let positions = ['p1', 'p2', 'p3', 'p4', 'p5', 'p0', 't1', 't2', 't3'];
@@ -68,7 +79,7 @@
           d.classList.add('p0');
           towers[totower].push(disk);
           setTimeout(render,1000);
-          setTimeout(endgame,2000);
+          setTimeout(endgame,1000);
           contador++;
       }
 
@@ -89,7 +100,79 @@
         if(towers[2].length === 5){
           nome = prompt("Parabéns! Você completou o jogo!\nDigite seu nome: ");
           movimentos = contador;
+          //criando crud para ver se funciona
+// Banco de Dados
+const BancoDados_Tabela = {
+    usuario: [
+      {
+        username: 'nome',
       }
+    ],
+    tempo: [
+      {
+        id: 1,
+        owner: 'nomeTeste',
+        time: '1:00T',
+        moviments: 32
+      }
+    ],
+    criaraking(dados){
+     BancoDados_Tabela.tempo.push({
+        id: BancoDados_Tabela.tempo.length + 1,
+        owner: dados.owner,
+        time: dados.time,
+        moviments: dados.moviments
+  });
+}
+};
+
+BancoDados_Tabela.criaraking({owner: nome, time: '2:21', moviments: movimentos});
+
+
+// [Códigos de front end: web]
+const $meuForm = document.querySelector('form');
+
+$meuForm.addEventListener('submit', function criaTabelaController(infosDoEvento){
+    infosDoEvento.defaultPrevented();
+    console.log("Está começando o terminal");
+    const $CriaCampoNome = document.querySelector('input[name="CriaCampoNome"]');
+    const $CriaCampoMovimento = document.querySelector('input[name="CriaCampoMovimento"]');
+    const $listaDaTabela = document.querySelector('.listaDaTabela');
+
+    $listaDaTabela.insertAdjacentElement('afterbegin', `<li>${$CriaCampoNome.value}</li>`);
+    $listaDaTabela.insertAdjacentElement('afterbegin', `<li>${$CriaCampoMovimento.value}</li>`);
+    $CriaCampoNome = '';
+    $CriaCampoMovimento = '';
+
+})
+// Pegando os dados do raking
+
+function pegaranking(){
+  return BancoDados_Tabela.tempo;
+};
+
+// Atualizando dados da tabela
+function AtualizaTabela(id, usuarioN, tempoN, movimenntosN){
+  const TabelaAtualizada = pegaranking().find((tempo) => {
+        return tempo.id === id;
+  })
+  console.log(TabelaAtualizada)
+  TabelaAtualizada.owner = usuarioN;
+  TabelaAtualizada.tempo = tempoN;
+  TabelaAtualizada.moviments = movimenntosN;
+};
+
+// Deletar dados da tabela
+
+function DeletaTabela(){
+  const TabelaTempoReal = pegaranking().filter((DadosAtual) => {
+    return DadosAtual.id !== id;
+})
+  BancoDados_Tabela.tempo = TabelaTempoReal;
+};
+
+console.log(BancoDados_Tabela.tempo);
+          }
     }
 
       setInterval(() => {

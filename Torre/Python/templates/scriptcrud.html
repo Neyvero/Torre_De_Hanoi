@@ -1,0 +1,62 @@
+<form>
+
+    <input name='CriaCampoNome' placeholder='Digite o nome de usuário' />
+    <input name='CriaCampoTempo' placeholder='Digite o nome de usuário' />
+    <button type="submit">Enviar</button>
+
+</form>
+
+<ul class="listaDaTabela">
+</ul>
+
+<script>
+
+console.log('Teste de guardar variavel');
+// Banco de Dados
+const BancoDados_Tabela = {
+    usuario: [
+      {
+        username: 'nome',
+      }
+    ],
+    tempo: [
+      {
+        id: 1,
+        owner: 'nomeTeste',
+        time: '1:00T',
+      }
+    ],
+    criaraking(dados){
+     BancoDados_Tabela.tempo.push({
+        id: BancoDados_Tabela.tempo.length + 1,
+        owner: dados.owner,
+        time: dados.time
+  });
+}
+};
+
+BancoDados_Tabela.criaraking({owner: 'Romario', time: '2:21'});
+
+
+// [Códigos de front end: web]
+const $meuForm = document.querySelector('form');
+
+$meuForm.addEventListener('submit', function criaTabelaController(infosDoEvento){
+    infosDoEvento.defaultPrevented();
+    console.log("Está começando o terminal");
+    const $CriaCampoNome = document.querySelector('input[name="CriaCampoNome"]');
+    const $CriaCampoTempo = document.querySelector('input[name="CriaCampoTempo"]');
+    const $listaDaTabela = document.querySelector('.listaDaTabela');
+
+    $listaDaTabela.insertAdjacentElement('afterbegin', `<li>${$CriaCampoNome.value}</li>`);
+    $listaDaTabela.insertAdjacentElement('afterbegin', `<li>${$CriaCampoTempo.value}</li>`);
+    $CriaCampoNome = '';
+    $CriaCampoTempo = '';
+
+})
+
+//cria variaveis
+//sincronizar o conteudo da variaveis com o HTml
+//atualiza as variaveis
+
+</script>
